@@ -341,7 +341,7 @@ export const UserProvider = ({ children }) => {
     try {
       setIsFetching(true);
 
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products`);
       const data = await res.json();
 
       if (!data.success || !res.ok) {
