@@ -25,7 +25,7 @@ const Register = () => {
   const onSubmit = async (formData) => {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/user/register", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/register`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
