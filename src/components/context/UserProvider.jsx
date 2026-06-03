@@ -39,6 +39,15 @@ export const UserProvider = ({ children }) => {
   const [isFetching, setIsFetching] = useState(false);
   const hasHandledSessionExpiry = useRef(false);
 
+  const getCurrentRoute = useCallback(() => {
+    const hashRoute = window.location.hash?.replace(/^#/, "");
+    return hashRoute || window.location.pathname || "/";
+  }, []);
+
+  const isProtectedRoute = useCallback((route) => {
+    return route.startsWith("/user");
+  }, []);
+
   const handleSessionExpiry = useCallback(async () => {
     if (hasHandledSessionExpiry.current) {
       return;
@@ -59,10 +68,12 @@ export const UserProvider = ({ children }) => {
       // Ignore logout request errors during forced session expiry handling.
     }
 
-    if (window.location.pathname !== "/login") {
-      window.location.href = "/login";
+    const currentRoute = getCurrentRoute();
+
+    if (isProtectedRoute(currentRoute) && currentRoute !== "/login") {
+      window.location.hash = "#/login";
     }
-  }, []);
+  }, [getCurrentRoute, isProtectedRoute]);
 
   const fetchWithRefresh = useCallback(
     async (url, options = {}) => {
