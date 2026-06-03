@@ -22,15 +22,22 @@ const WishListCard = ({
     await deleteWishlist(productId);
   };
 
+  const handleDelete = () => {
+    const productId = product?._id || product?.id;
+    deleteWishlist(productId);
+    // fetchWishlist()
+
+  };
+
   return (
     <div className="h-87">
       <div className="flex flex-col mb-4 rounded h-67">
         <div className="relative flex justify-center items-center bg-gray-200 h-60 rounded  cursor-pointer">
-          <div className="w-45 h-35 flex justify-center items-center  my-7 mx-8 ">
+          <div className="w-45 h-35 flex justify-center items-center  my-7 mx-8  ">
             <img src={image} alt="" className="h-full w-full" />
           </div>
-          <div className="absolute top-4 right-4 w-5">
-            <img src="contacts-icons/icon-delete.svg" alt="" />
+          <div onClick={handleDelete} className="absolute top-4 right-4 w-5 border ">
+            <img src="contacts-icons/icon-delete.svg" alt="" className="" />
           </div>
           {discount && (
             <p className="absolute top-4 left-4  bg-[#DB4444] text-[11px] text-white px-4 py-0.5 rounded-sm">

@@ -23,6 +23,11 @@ const FlashSalesCard = ({
     navigate(`/user/product/${productId}`);
   };
 
+  const handleAddToWishlishList = () => {
+    // const productId = product?._id || product?.id;
+    addWishlist(productId);
+  };
+
   const ratingImage = `/ratings/rating-${stars * 10}.png`;
   return (
     <div className="">
@@ -32,10 +37,11 @@ const FlashSalesCard = ({
         </div>
         <div className="absolute top-4 right-4">
           <FaRegHeart
-            onClick={() => {
-              addWishlist(product);
-            }}
-            className="mb-3"
+            // onClick={() => {
+            //   addWishlist(product);
+            // }}
+            onClick={handleAddToWishlishList}
+            className="mb-3 border"
           />
           <IoEyeOutline
             onClick={handleViewProduct}
@@ -71,6 +77,3 @@ const FlashSalesCard = ({
 };
 
 export default FlashSalesCard;
-
-
-
