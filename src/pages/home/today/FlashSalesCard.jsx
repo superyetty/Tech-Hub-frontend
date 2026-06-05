@@ -15,6 +15,7 @@ const FlashSalesCard = ({
   addWishlist,
 }) => {
   const navigate = useNavigate();
+
   const handleViewProduct = () => {
     if (!productId) {
       console.warn("Product ID is missing");
@@ -23,9 +24,8 @@ const FlashSalesCard = ({
     navigate(`/user/product/${productId}`);
   };
 
-  const handleAddToWishlishList = () => {
-    // const productId = product?._id || product?.id;
-    addWishlist(productId);
+  const handleAddToWishlishList = (product) => {
+    addWishlist(product);
   };
 
   const ratingImage = `/ratings/rating-${stars * 10}.png`;
@@ -37,10 +37,9 @@ const FlashSalesCard = ({
         </div>
         <div className="absolute top-4 right-4">
           <FaRegHeart
-            // onClick={() => {
-            //   addWishlist(product);
-            // }}
-            onClick={handleAddToWishlishList}
+            onClick={() => {
+              addWishlist(product);
+            }}
             className="mb-3 border"
           />
           <IoEyeOutline
