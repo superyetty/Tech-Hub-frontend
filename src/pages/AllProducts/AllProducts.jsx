@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useUser } from "../../components/context/UserProvider";
 import ProductCard from "../home/explore-product/ProductCard";
 import Header from "../../components/Header";
+import AuthHeader from "../../components/auth-header/AuthHeader";
 
 const AllProducts = () => {
   const { products } = useUser();
@@ -31,7 +32,7 @@ const AllProducts = () => {
 
   return (
     <div className="w-full max-w-300 mx-auto space-y-10">
-      <Header />
+      <AuthHeader />
       {searchTerm ? (
         <p className="text-sm text-gray-600">Showing results for: {searchTerm}</p>
       ) : null}

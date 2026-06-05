@@ -27,11 +27,7 @@ const ProductCard = ({
       <div className="relative flex justify-center items-center bg-gray-200 mb-4 h-60 rounded-t-md ">
         <div className="w-45 h-45 flex justify-center items-center  ">
           <div className="relative w-full h-full isolaton-isolate cursor-pointer">
-            <img
-              src={image}
-              alt=""
-              className="h-full w-full rounded"
-            />
+            <img src={image} alt="" className="h-full w-full rounded" />
             {selectedColor && (
               <div
                 className="absolute top-0 bottom-0 left-5 right-5 inset- 0 mix-blend-multiply opacity-90  "
@@ -41,8 +37,8 @@ const ProductCard = ({
           </div>
         </div>
         <div className="absolute top-5 right-5">
-          <FaRegHeart className="mb-3" />
-          <IoEyeOutline />
+          <FaRegHeart className="mb-3 cursor-pointer" />
+          <IoEyeOutline className="cursor-pointer" />
         </div>
         {status ? (
           <p className="absolute top-2 left-3 bg-[#00FF66] text-[11px] text-white px-2 py-0.5 rounded-sm">
@@ -56,9 +52,7 @@ const ProductCard = ({
       <div className="">
         <div className="flex flex-col gap-y-2">
           <p className="font-semibold cursor-pointer w-fit">{name}</p>
-            {/* <p className="text-[#DB4444] text-sm font-semibold w-fit cursor-pointer">
-              ${currentPrice}
-            </p> */}
+
           <div className="flex items-center gap-x-2 cursor-pointer w-fit ">
             <p className="text-[#DB4444] text-sm font-semibold w-fit cursor-pointer">
               ${currentPrice}
@@ -68,19 +62,6 @@ const ProductCard = ({
             </div>
             <p className="text-gray-400 font-semibold text-sm">({counts})</p>
           </div>
-          {/* <div className="flex gap-x-2 border">
-            {hasColors &&
-              colors.map((color, i) => (
-                <div
-                  key={i}
-                  onClick={() => {
-                    setSelectedColor(color);
-                  }}
-                  className="w-5 h-5 rounded-full cursor-pointer "
-                  style={getColorStyle(color)}
-                />
-              ))}
-          </div> */}
         </div>
       </div>
     </div>

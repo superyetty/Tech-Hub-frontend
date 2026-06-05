@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useUser } from "../../../components/context/UserProvider";
 import FlashSalesCard from "./FlashSalesCard";
+import { useNavigate } from "react-router-dom";
 
 const PRODUCTS_PER_SLIDE = 5;
 
 const TodayCard = ({ index }) => {
+  const navigate = useNavigate()
   const { products, isFetching, addWishlist } = useUser();
   const [, setIsLoading] = useState(false);
-  
+
   const productSlides = [];
 
   for (let i = 0; i < products.length; i += PRODUCTS_PER_SLIDE) {
@@ -17,7 +19,7 @@ const TodayCard = ({ index }) => {
   return (
     <div className="flex flex-col gap-y-10 items-center">
       <div className="h-full w-full overflow-hidden ">
-        { productSlides.length === 0 ? (
+        {productSlides.length === 0 ? (
           <p className="py-8 text-center">No products available right now.</p>
         ) : (
           <div
@@ -28,7 +30,7 @@ const TodayCard = ({ index }) => {
               return (
                 <div
                   key={slideIndex}
-                  className="min-w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+                  className="min-w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-10"
                 >
                   {slide.map((product, productIndex) => (
                     <FlashSalesCard
@@ -52,9 +54,14 @@ const TodayCard = ({ index }) => {
         )}
       </div>
       <div className="">
-        <p className="py-4 px-12 bg-[#DB4444] text-white font-semibold rounded-sm cursor-pointer">
+        <button
+          onClick={() => {
+            navigate("/products");
+          }}
+          className="py-4 px-12 bg-[#DB4444] text-white font-semibold rounded-sm cursor-pointer"
+        >
           View All Products
-        </p>
+        </button>
       </div>
     </div>
   );

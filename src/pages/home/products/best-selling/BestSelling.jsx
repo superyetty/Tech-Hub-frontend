@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { useUser } from "../../../../components/context/UserProvider";
 import ProductCard from "../SharedProductCard";
 import Header from "../../../../components/Header";
+import AuthHeader from "../../../../components/auth-header/AuthHeader";
 
 const BestSelling = () => {
   const { products, isFetching } = useUser();
@@ -19,7 +20,7 @@ const BestSelling = () => {
   }
   return (
     <div className="w-full max-w-300 mx-auto space-y-10">
-      <Header/>
+      <AuthHeader/>
       <p className="text-4xl font-medium">Best Selling Products</p>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-5  ">
         {filteredProducts.map((product) => {

@@ -1,12 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthHeader from "../../components/auth-header/AuthHeader";
 import WishListCard from "./WishListCard";
 import Footer from "../../components/Footer";
 import ForYouCard from "./ForYouCard";
 import { useUser } from "../../components/context/UserProvider";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const WishList = () => {
-  const { products, wishlists, isFetching } = useUser();
+  const navigate = useNavigate();
+  const { products, wishlists, addToCart, deleteWishlist, isFetching } =
+    useUser();
+  const [isMovingAll, setIsMovingAll] = useState(false);
+
+  const moveAllToBagButton = async () => {
+    if (wishlists.length === 0 || isMovingAll) {
+      return;
+    }
+
+    setIsMovingAll(true);
+
+    try {
+      for (const product of wishlists) {
+        const addResult = await addToCart(product);
+
+        if (!addResult?.success) {
+          continue;
+        }
+
+        const productId = product?._id || product?.id;
+        if (productId) {
+          await deleteWishlist(productId);
+        }
+      }
+    } finally {
+      setIsMovingAll(false);
+    }
+  };
+
+  const disableMoveAllButton =
+    isFetching || isMovingAll || wishlists.length === 0;
+
   return (
     <div className="w-full max-w-300 mx-auto ">
       <AuthHeader />
@@ -15,8 +49,12 @@ const WishList = () => {
           <div className="flex justify-between items-center  h-15">
             <p>Wishlist ({wishlists.length})</p>
             <div className="h-12 w-45 flex justify-center items-center border border-gray-400 rounded">
-              <button className="font-semibold w-full h-full cursor-pointer ">
-                Move All To Bag
+              <button
+                onClick={moveAllToBagButton}
+                disabled={disableMoveAllButton}
+                className="font-semibold w-full h-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isMovingAll ? "Moving..." : "Move All To Bag"}
               </button>
             </div>
           </div>
@@ -25,7 +63,7 @@ const WishList = () => {
               {wishlists.map((product) => {
                 return (
                   <WishListCard
-                  product={product}
+                    product={product}
                     key={product.wishlistId || product._id}
                     image={product.image}
                     name={product.name}
@@ -45,7 +83,10 @@ const WishList = () => {
               <p className="font-semibold">Just For You</p>
             </div>
             <div className="h-12 w-37 flex justify-center items-center border border-gray-400 rounded">
-              <button className="font-semibold w-full h-full cursor-pointer">
+              <button
+                onClick={() => navigate("/products")}
+                className="font-semibold w-full h-full cursor-pointer"
+              >
                 See All
               </button>
             </div>

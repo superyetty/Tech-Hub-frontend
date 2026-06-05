@@ -31,21 +31,25 @@ const FlashSalesCard = ({
   const ratingImage = `/ratings/rating-${stars * 10}.png`;
   return (
     <div className="">
-      <div className="relative flex justify-center items-center bg-gray-200 mb-4 h-42 rounded-t-sm cursor-pointer">
-        <div className="w-45 h-30  flex justify-center items-center  my-7 mx-8 ">
-          <img src={image} alt="" className="h-full w-25 " />
+      <div className="relative mb-4 bg-gray-200 rounded-t-sm pt-15">
+        <div className=" w-full h-50 h- full 30  flex justify-center items-center ">
+          <img src={image} alt="" className="h-full w-full object cover rounded-b-sm" />
         </div>
-        <div className="absolute top-4 right-4">
-          <FaRegHeart
-            onClick={() => {
-              addWishlist(product);
-            }}
-            className="mb-3 border"
-          />
-          <IoEyeOutline
-            onClick={handleViewProduct}
-            className="cursor-pointer"
-          />
+        <div className="absolute top-1 right-4 space-y-2">
+          <div className="flex justify-center  px-1 py-1 rounded-full bg-white">
+            <FaRegHeart
+              onClick={() => {
+                addWishlist(product);
+              }}
+              className="cursor-pointer"
+            />
+          </div>
+          <div className=" px-1 py-1 rounded-full bg-white">
+            <IoEyeOutline
+              onClick={handleViewProduct}
+              className="cursor-pointer"
+            />
+          </div>
         </div>
         <p className="absolute top-2 left-3 bg-[#DB4444] text-[11px] text-white px-2 py-0.5 rounded-sm">
           -{discount}%

@@ -5,9 +5,37 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../../components/context/UserProvider";
 
 const Todaysales = () => {
+  const Day_Time_Ms = 24 * 60 * 60 * 1000;
   const { products = [] } = useUser();
   const [index, setIndex] = useState(0);
-  
+  const [endTime, setEndTime] = useState(Date.now() + Day_Time_Ms);
+  const [timeLeft, setTimeLeft] = useState(Day_Time_Ms);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let diff = endTime - Date.now();
+
+      if (diff <= 0) {
+        setEndTime(Date.now() + Day_Time_Ms);
+      }
+      setTimeLeft(diff);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [endTime]);
+
+  const format = (ms) => {
+    const safeMs = Math.max(0, ms ?? 0);
+    const totalSeconds = Math.floor(safeMs / 1000);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+    return { days, hours, minutes, seconds };
+  };
+
+  const formatPart = (value) => String(value).padStart(2, "0");
+  const { days, hours, minutes, seconds } = format(timeLeft);
+
   const totalSlides = Math.max(1, Math.ceil(products.length / 5));
 
   useEffect(() => {
@@ -40,28 +68,28 @@ const Todaysales = () => {
               <div className="flex items-center gap-x-4">
                 <div>
                   <p className="text-[11px] font-bold ">Days</p>
-                  <p className="flex text-3xl font-bold ">03</p>
+                  <p className="flex text-3xl font-bold ">{formatPart(days)}</p>
                 </div>
                 <p className="text-red-500 font-semibold text-2xl">:</p>
               </div>
               <div className="flex items-center gap-x-4">
                 <div>
                   <p className="text-[11px] font-bold  ">Hours</p>
-                  <p className="flex text-3xl font-bold ">23</p>
+                  <p className="flex text-3xl font-bold ">{formatPart(hours)}</p>
                 </div>
                 <p className="text-red-500 font-semibold text-2xl">:</p>
               </div>
               <div className="flex items-center gap-x-4">
                 <div>
                   <p className="text-[11px] font-bold  ">Minutes</p>
-                  <p className="flex text-3xl font-bold ">19</p>
+                  <p className="flex text-3xl font-bold ">{formatPart(minutes)}</p>
                 </div>
                 <p className="text-red-500 font-semibold text-2xl">:</p>
               </div>
               <div className="flex items-center gap-x-4">
                 <div>
                   <p className="text-[11px] font-bold  ">Seconds</p>
-                  <p className="flex text-3xl font-bold ">56</p>
+                  <p className="flex text-3xl font-bold ">{formatPart(seconds)}</p>
                 </div>
               </div>
             </div>
